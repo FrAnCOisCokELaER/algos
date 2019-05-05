@@ -55,7 +55,7 @@ class Node:
             res = res + [node.data]
         return res
 
-#depth first
+#depth first binary : !! not efficient for binary trees
 def findbyvalue(node, value):
     if node:
         if node.data is value:
@@ -70,7 +70,7 @@ def findbyvalue(node, value):
                 return foundright
 
 import collections
-
+#the two follwing
 #breadth first
 def findbyvaluebreadth(head, value):
     def findinlist(nodequeue, value):
@@ -86,6 +86,15 @@ def findbyvaluebreadth(head, value):
     q.append(head)
     node = findinlist(q, value)
     return node
+
+def findbyvaluebinary(head,value):
+    if head:
+        if value > head.data:
+            return findbyvaluebinary(head.right,value)
+        elif value < head.data:
+            return findbyvaluebinary(head.left, value)
+        else:
+            return head
 
 if __name__ == "__main__":
     node = Node(10)
@@ -103,3 +112,5 @@ if __name__ == "__main__":
     print(found.data)
     foundbreadth = findbyvaluebreadth(node, 42)
     print(foundbreadth.data)
+    foundoptim = findbyvaluebinary(node,6)
+    print(foundoptim.data)

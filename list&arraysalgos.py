@@ -75,13 +75,13 @@ def bsearch(tosearch, idx0, idxn, val):
         else:
             return halfindex
 
+#permform a random shuffle of array elts
 from random import randint
-print(randint(0, 9))
 def randomshuffle(alist):
     def shuffleindex(size):
         shuffl = []
         while len(shuffl) is not size:
-            anint = randint(0, len(alist)-1)
+            anint = randint(0, len(alist)-1) #not like range !
             already=False
             for elt in shuffl:
                 if elt is anint:
