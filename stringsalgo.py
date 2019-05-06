@@ -14,13 +14,7 @@ def ispalindrome(word):
 #         occ = word.count(c)
 #         adict[c] = occ
 #     return adict
-#
-# #combinatory problem :
-# def generateanagrams(occurences):
-#     res = []
-#
-# def workfromoccurence(occurence):
-#     for item in occurence:
+
 
 #count method for strings can be useful : number of occurence of a character
 #for sublist anagram : number of possibilities if n parmis n = n!
@@ -71,6 +65,34 @@ def iseditof(word1, word2):
     #len(word2) < len(word1)
     #len(word2) > len(word1)
 
+#tips : wort a string : sorted(mystring)
+#string - > list with split
+#list - > string ''.join
+#    prefix = ''
+#    for c in  mystringsorted:
+#        prefix+=c
+
+
+#iterate within a map for k, v in map.items()
+#onlyr keyds for k in map
+from listarraysalgos import qsort
+#group by a list by anagrams
+def sortanagrams(words):
+    #wordssorted = [qsort(aword.split()) for aword in words]
+    # map [anagram -> list( word))
+    anagramtowords= dict()
+    for word in words:
+        key = ''.join(sorted(word))
+        if  key not in anagramtowords:
+            anagramtowords[key] = [word]
+        else:
+            anagramtowords[key].append(word)
+    #return a list of sorted anagrams
+    res = []
+    for key, values in anagramtowords.items():
+        for vit in values:
+            res.append(vit)
+    return res
 
 if __name__ == "__main__":
     word = "bonjour"
@@ -78,5 +100,9 @@ if __name__ == "__main__":
     res = permutation('bonjour')
     print(len(res))
     print(iseditof('bonjour','bonnjkur'))
-    a = bytes('Hello World',encoding='utf-8')
+    a = bytes('Hello World', encoding='utf-8')
     print('toto')
+    anagramslist = ['coucou', 'salut', 'eocrit', 'cuocuo', 'lutsa', 'criteo']
+    print(anagramslist)
+    res = sortanagrams(anagramslist)
+    print(res)

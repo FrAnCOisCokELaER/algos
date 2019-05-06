@@ -102,4 +102,15 @@ if __name__ == "__main__":
     alist = [1,2,3,4,5,6,7,8,9,10]
     res = randomshuffle(alist)
     print(res)
-    alist
+    mylistsort = qsort(res)
+    print(mylistsort)
+    mystringtosort = 'blaflakfkfzfo'
+    if 'a'<'b':
+        print('True')
+        print( list(mystringtosort))
+        print(map(lambda x: x,mystringtosort ))
+    mystringsorted = qsort(list(mystringtosort))
+    prefix = ''
+    for c in  mystringsorted:
+        prefix+=c
+    print(prefix)
