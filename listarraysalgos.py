@@ -1,5 +1,4 @@
 # https://www.tutorialspoint.com/python/python_recursion.htm
-
 # append is modifying the list in place, + create a new list
 # complexity ois O(n log(n))
 # logarithm time to divide and linear time to merge n elements
@@ -75,6 +74,21 @@ def bsearch(tosearch, idx0, idxn, val):
         else:
             return halfindex
 
+#binary search in a rotated arrat
+def bsearchrotated(tosearch, idx0, idxn, val):
+    #find pivot
+    pivot = None
+    for idx in range(0, len(tosearch) - 1):
+        if tosearch[idx] > tosearch[idx+1]:
+            pivot = idx
+    if pivot:
+        left = tosearch[0:pivot]
+        right = tosearch[pivot+1:]
+        if val >= left[0]:
+            return bsearch(left, 0, len(left)-1, val)
+        else:
+            return (bsearch(right, 0, len(right)-1, val) + pivot) + 1
+
 #permform a random shuffle of array elts
 from random import randint
 def randomshuffle(alist):
@@ -108,9 +122,15 @@ if __name__ == "__main__":
     if 'a'<'b':
         print('True')
         print( list(mystringtosort))
-        print(map(lambda x: x,mystringtosort ))
+        print(map(lambda x: x, mystringtosort ))
     mystringsorted = qsort(list(mystringtosort))
     prefix = ''
     for c in  mystringsorted:
         prefix+=c
     print(prefix)
+    alist = [6, 7, 8, 9, 10, 1, 2, 3, 4, 5]
+    idx = bsearchrotated(alist, 0, len(alist)-1, 9)
+    print(idx)
+
+
+#tips : for arrays sort, search thlnk of divide and conquer approach

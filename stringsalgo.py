@@ -83,7 +83,7 @@ def sortanagrams(words):
     anagramtowords= dict()
     for word in words:
         key = ''.join(sorted(word))
-        if  key not in anagramtowords:
+        if key not in anagramtowords:
             anagramtowords[key] = [word]
         else:
             anagramtowords[key].append(word)
