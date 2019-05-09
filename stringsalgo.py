@@ -66,33 +66,13 @@ def iseditof(word1, word2):
     #len(word2) > len(word1)
 
 #tips : wort a string : sorted(mystring)
-#string - > list with split
 #list - > string ''.join
 #    prefix = ''
 #    for c in  mystringsorted:
 #        prefix+=c
 
 
-#iterate within a map for k, v in map.items()
-#onlyr keyds for k in map
-from listarraysalgos import qsort
-#group by a list by anagrams
-def sortanagrams(words):
-    #wordssorted = [qsort(aword.split()) for aword in words]
-    # map [anagram -> list( word))
-    anagramtowords= dict()
-    for word in words:
-        key = ''.join(sorted(word))
-        if key not in anagramtowords:
-            anagramtowords[key] = [word]
-        else:
-            anagramtowords[key].append(word)
-    #return a list of sorted anagrams
-    res = []
-    for key, values in anagramtowords.items():
-        for vit in values:
-            res.append(vit)
-    return res
+
 
 if __name__ == "__main__":
     word = "bonjour"

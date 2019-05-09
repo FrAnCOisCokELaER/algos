@@ -62,7 +62,7 @@ class dll:
     def removenode(self, nodetodel):
         tmpprev = nodetodel.prev
         tmpnext = nodetodel.next
-        if tmpprev :
+        if tmpprev:
             tmpprev.next = tmpnext
         else:
             self.head = tmpnext
@@ -80,3 +80,5 @@ if __name__ == "__main__":
 
     adll.removenode(adll.getnode(1))
     adll.traverse()
+
+    #print(res)

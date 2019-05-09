@@ -1,7 +1,4 @@
-import collections
-
-
-# Hashmap implementation
+#Hashmap implementation
 class MyMap:
     def __init__(self, slots=8):
         self.slots = slots
