@@ -1,10 +1,9 @@
-
 #Directed ayclic graph example filled with integer
 class Node:
     def __init__(self, data):
-        self.prev=list()
-        self.next=list()
-        self.data=data
+        self.prev = list()
+        self.next = list()
+        self.data = data
 
 class DAG:
     def __init__(self):
@@ -34,7 +33,6 @@ class DAG:
             anacc = list()
             allpathsfromnode(starter, list(), anacc)
             all.append(anacc)
-
         return all
 
 if __name__ == "__main__":

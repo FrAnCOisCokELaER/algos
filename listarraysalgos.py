@@ -1,14 +1,14 @@
 # https://www.tutorialspoint.com/python/python_recursion.htm
-# append is modifying the list in place, + create a new list from two lists
-# complexity ois O(n log(n))
+# append is modifying the list in place, + concatenate : a new list from two lists
+# complexity is O(n log(n))
 # logarithm time to divide and linear time to merge n elements
 def msort(tosort):
-    # divide
-    halfindex = (int)(len(tosort) / 2)
+    # divide and conquer
+    halfindex = (len(tosort) // 2) # // is doing floor after division
     if halfindex == 0:
         return tosort
     else:
-        # merge
+        # merge two list that are already
         def merge(left, right):
             if not left:
                 return right
@@ -18,7 +18,6 @@ def msort(tosort):
                 return [left[0]] + merge(left[1:], right)
             else:
                 return [right[0]] + merge(left, right[1:])
-
         return (merge(msort(tosort[0:halfindex]), msort(tosort[halfindex:])))
 
 
@@ -26,7 +25,7 @@ def msort(tosort):
 # logarithm time to divide and linear time to compare n elements
 # can be n^2 if pivot is taken as the max value of a sorted array
 def qsort(tosort):
-    halfindex = (int)(len(tosort) / 2)
+    halfindex = len(tosort) //2
     if halfindex == 0:
         return tosort
     else:
@@ -75,7 +74,7 @@ def bsearch(tosearch, idx0, idxn, val):
         elif tosearch[halfindex] < val:
             return bsearch(tosearch, halfindex + 1, idxn, val)
         else:
-            return halfindex
+            return halfindex #mean that we have reached the value
 
 #binary search in a rotated array already sorted by ascending order
 #find the pivot and then do a regular binary search on the two subarrays
@@ -95,9 +94,10 @@ def bsearchrotated(tosearch, idx0, idxn, val):
     else:
         return tosearch #no pivot found means the list is not rotated
 
-#permform a random shuffle of array elements
+#perform a random shuffle of array elements
 from random import randint
 def randomshuffle(alist):
+    #first create a working array containing the mapping from initial array to the shuffled array
     def shuffleindex(size):
         shuffl = []
         while len(shuffl) is not size:
@@ -111,7 +111,9 @@ def randomshuffle(alist):
                 shuffl.append(anint)
         return shuffl
 
+    #generate en array for index mapping
     index = shuffleindex(len(alist))
+    #map the index
     res = []
     for idx in index:
         res.append(alist[idx])
@@ -120,13 +122,12 @@ def randomshuffle(alist):
 
 #Sort a list by its anagrams
 #iterate within a map for k, v in map.items()
-# iterate only on keys :  for k in map
-from listarraysalgos import qsort
+#iterate only on keys :  for k in map
 def sortanagrams(words):
     # map [anagram -> list( word))
     anagramtowords= dict()
     for word in words:
-        key = ''.join(sorted(word)) #from list to string representation
+        key = ''.join(sorted(word)) #from list to string representation #sorted of is giving a list of char
         if key not in anagramtowords:
             anagramtowords[key] = [word]
         else:
@@ -140,24 +141,28 @@ def sortanagrams(words):
 
 if __name__ == "__main__":
     print('toto')
-    alist = [1,2,3,4,5,6,7,8,9,10]
+    alist = [1,-2.13,3,4,-5,6,7,8,9,10]
+    print(alist)
     res = randomshuffle(alist)
     print(res)
-    mylistsort = qsort(res)
+    mylistsort = msort(res)
     print(mylistsort)
     mystringtosort = 'blaflakfkfzfo'
     if 'a'<'b':
         print('True')
-        print( list(mystringtosort))
-        print(map(lambda x: x, mystringtosort ))
+        print(list(mystringtosort))
+        print(list(map(lambda x: x, mystringtosort )))
     mystringsorted = qsort(list(mystringtosort))
     prefix = ''
     for c in  mystringsorted:
         prefix+=c
+
     print(prefix)
     alist = [6, 7, 8, 9, 10, 1, 2, 3, 4, 5]
     idx = bsearchrotated(alist, 0, len(alist)-1, 9)
     print(idx)
-
+    anagramslist = ['coucou', 'salut', 'eocrit', 'cuocuo', 'lutsa', 'criteo']
+    print(anagramslist)
+    print(sortanagrams(anagramslist))
 
 #tips : for arrays sort, search thlnk of divide and conquer approach

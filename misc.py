@@ -1,35 +1,32 @@
-
+#time complexity : O(N) (insertin in a dll is O(1))
 def cumsum(alist):
     res = list()
-    for idx, val in enumerate(alist):
+    for idx in range(len(alist)):
         if idx is 0:
-            res.append(val)
+            res.append(alist[idx])
         else:
-            res.append(res[idx - 1] + val)
+            res.append(res[idx - 1] + alist[idx])
     return res
 
 
 # compute mean
 def slidingmean(alist, radius=1):
-    asum = cumsum(alist)
+    asum = cumsum(alist)  # O(N)
     res = list()
-    leftidx = rightidx = 0
     for idx, val in enumerate(asum):
         if idx - radius - 1 < 0:
             valleft = 0
         else:
             valleft = asum[idx - radius - 1]
         if idx + radius >= len(alist):
-            rightidx = len(alist) - 1
+            valright= asum[len(alist) - 1]
         else:
-            rightidx = idx + radius
-
-        res.append(asum[rightidx] - valleft)
+            valright = asum[idx + radius]
+        res.append(valright - valleft)
     return res
 
 
 if __name__ == "__main__":
     alist = [1, 2, 3, 4, 5]
-
     print(alist)
-    print(slidingmean(alist,5))
+    print(slidingmean(alist,1))
