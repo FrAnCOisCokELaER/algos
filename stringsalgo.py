@@ -72,17 +72,14 @@ def iseditof(word1, word2):
 #        prefix+=c
 
 
-
-
 if __name__ == "__main__":
     word = "bonjour"
     print(ispalindrome('abcdcba'))
     res = permutation('bonjour')
     print(len(res))
+    print(res)
     print(iseditof('bonjour','bonnjkur'))
     a = bytes('Hello World', encoding='utf-8')
     print('toto')
     anagramslist = ['coucou', 'salut', 'eocrit', 'cuocuo', 'lutsa', 'criteo']
     print(anagramslist)
-    res = sortanagrams(anagramslist)
-    print(res)

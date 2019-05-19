@@ -5,55 +5,96 @@ class Node:
         self.right = None
         self.data = data
 
-    #insert a node in binary search tree
-    def insert(self, data):
-        if self.data:
-            if data <= self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                else:
-                    self.left.insert(data)
+#insert a node in binary search tree
+def insert(head, data):
+    if head.data:
+        if data < head.data:
+            if head.left is None:
+                head.left = Node(data)
             else:
-                if self.right is None:
-                    self.right = Node(data)
-                else:
-                    self.right.insert(data)
+                insert(head.left, data)
+        elif data > head.data:
+            if head.right is None:
+                head.right = Node(data)
+            else:
+                insert(head.right, data)
+    else:
+        head.data = data
+
+#traversal algorithm for binary graphs
+#left, central, right
+def inordertraversal(node):
+    res = []
+    if node:
+        res = inordertraversal(node.left)
+        res = res + [node.data]
+        res = res + inordertraversal(node.right)
+    return res
+
+#central, left, right
+def preordertraversal(node):
+    res = []
+    if node:
+        res = [node.data]
+        res = res + preordertraversal(node.left)
+        res = res + preordertraversal(node.right)
+    return res
+
+#left, right, central
+def postordertraversal(node):
+    res = []
+    if node:
+        res = postordertraversal(node.left)
+        res = res + postordertraversal(node.right)
+        res = res + [node.data]
+    return res
+
+
+#print in depth
+def printtree(node):
+    if node.left:
+        printtree(node.left)
+    print(node.data)
+    if node.right:
+        printtree(node.right)
+
+
+def deletenode(head, node):
+    print(node.data)
+    if node.left and node.right:
+    # find max in rigth subtree
+        maxnode = findmax(node)
+        print(maxnode)
+        #replace value
+        parent = findparent(node, maxnode)
+        node.data = maxnode.data
+        parent.right = None
+    elif node.left:
+        node.data = node.left.data
+        node.left = None
+    elif node.right:
+        node.data = node.right.data
+        node.right = None
+    else: #no child just remove
+        parent = findparent(head, node)
+        if parent.left.data is node.data:
+            parent.left = None
         else:
-            self.data = data
+            parent.right = None
 
-    def print(self):
-        if self.left:
-            self.left.print()
-        print(self.data)
-        if self.right:
-            self.right.print()
-
-    #left, central, right
-    def inordertraversal(self, node):
-        res = []
-        if node:
-            res = self.inordertraversal(node.left)
-            res = res + [node.data]
-            res = res + self.inordertraversal(node.right)
-        return res
-
-    #central, left, right
-    def preordertraversal(self, node):
-        res = []
-        if node:
-            res = [node.data]
-            res = res + self.preordertraversal(node.left)
-            res = res + self.preordertraversal(node.right)
-        return res
-
-    #left, right, central
-    def postordertraversal(self, node):
-        res = []
-        if node:
-            res = self.postordertraversal(node.left)
-            res = res + self.postordertraversal(node.right)
-            res = res + [node.data]
-        return res
+def findparent(head, node):
+    if node.data > head.data:
+        if head.right is node:
+            return head
+        else:
+            return findparent(head.right, node)
+    elif node.data < head.data:
+        if head.left is node:
+            return head
+        else:
+            return findparent(head.left,node)
+    else:
+        return
 
 #depth first binary : !! not efficient for binary trees
 def findbyvalue(node, value):
@@ -69,8 +110,14 @@ def findbyvalue(node, value):
             if foundright:
                 return foundright
 
+def findmax(node):
+    if node.right:
+        return findmax(node.right)
+    else:
+        return node
+
 import collections
-#the two follwing
+#the two following
 #breadth first
 def findbyvaluebreadth(head, value):
     def findinlist(nodequeue, value):
@@ -98,19 +145,18 @@ def findbyvaluebinary(head,value):
 
 if __name__ == "__main__":
     node = Node(10)
-    node.insert(15)
-    node.insert(42)
-    node.insert(41)
-    node.insert(5)
-    node.insert(6)
-    node.insert(2)
-    node.print()
-    print(node.inordertraversal(node))
-    print(node.postordertraversal(node))
-    print(node.preordertraversal(node))
-    found = findbyvalue(node, 42)
-    print(found.data)
-    foundbreadth = findbyvaluebreadth(node, 42)
-    print(foundbreadth.data)
-    foundoptim = findbyvaluebinary(node,6)
-    print(foundoptim.data)
+    insert(node, 15)
+    insert(node, 12)
+    insert(node, 42)
+    insert(node, 43)
+    insert(node, 5)
+    insert(node, 6)
+    insert(node, 2)
+    printtree(node)
+
+    print(inordertraversal(node))
+    print(preordertraversal(node))
+    print(postordertraversal(node))
+
+    toto = findbyvaluebinary(node,789)
+    print('test ok ')
