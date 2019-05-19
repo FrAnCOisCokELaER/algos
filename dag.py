@@ -1,5 +1,5 @@
 
-
+#Directed ayclic graph example filled with integer
 class Node:
     def __init__(self, data):
         self.prev=list()
@@ -10,6 +10,7 @@ class DAG:
     def __init__(self):
         self.nodes = list()
 
+    #get a list of all path in a directed graph
     def allpaths(self):
         starters = list()
         for node in self.nodes:
@@ -19,6 +20,7 @@ class DAG:
             print("no starting node has been found")
             return -1
 
+        #analigous to anagramm generation
         def allpathsfromnode(startnode, path, acc):
             nexts = startnode.next
             if not nexts:

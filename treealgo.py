@@ -121,7 +121,7 @@ import collections
 #breadth first
 def findbyvaluebreadth(head, value):
     def findinlist(nodequeue, value):
-        while nodequeue :
+        while nodequeue:
             curr = nodequeue.pop()
             if curr.data is value:
                 return curr
