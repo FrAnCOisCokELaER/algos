@@ -1,24 +1,23 @@
 import unittest
-import math
 
 #compute the gcd of a and b
 #euclidean algorithm
 #explanation let a = bq+r then id gcd divide a and b it also divides b and b*q + r so it should divide r
-def gcd(a,b):
-    if b==0:
+def gcd(a, b):
+    if b == 0:
         return a
     else:
-        return gcd(b, a%b)
+        return gcd(b, a % b)
 
 def isprime(n, i=2):  # si N = pq i.e. pas premier alors soit p ou q < sqrt(N)
     if n==2 or n==1:
         return True
     if n%i is 0:
         return False
-    elif (i*i)>n: # true because all possible combination for i has been done
+    elif (i*i) > n: # true because all possible combination for i has been done
         return True
     else:
-        return isprime(n,i+1)
+        return isprime(n, i+1)
 
 #pascal triangle
 def pascaltriangle(col, row):
@@ -61,20 +60,20 @@ def countChange(money, coins):
         return countChange(money-coins[0], coins) + countChange(money, coins[1:])
 
 
-class TestRecusrion(unittest.TestCase):
-
-    def test_pascal(self):
-        self.assertEqual(pascaltriangle(1,3), 3)
-    def test_balance(self):
-        expr = '(if (zero? x) max (/ 1 x))'
-        self.assertTrue(balance(expr))
-    def test_balance2(self):
-        expr = ':-)'
-        self.assertFalse(balance(expr))
+# class TestRecusrion(unittest.TestCase):
+#
+#     def test_pascal(self):
+#         self.assertEqual(pascaltriangle(1,3), 3)
+#     def test_balance(self):
+#         expr = '(if (zero? x) max (/ 1 x))'
+#         self.assertTrue(balance(expr))
+#     def test_balance2(self):
+#         expr = ':-)'
+#         self.assertFalse(balance(expr))
 
 if __name__ == "__main__":
     #print(pascaltriangle(1,3))
     #unittest.main()
     balance("toto")
-    print(gcd(75,25))
+    print(gcd(25, 75))
     print(isprime(7))

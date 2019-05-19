@@ -212,7 +212,6 @@ def digitstoletter(digits): #stirng of number
         if not digits:
             acc.append(word)
         else:
-            res = list()
             for achar in telmap[digits[0]]:
                 toword(digits[1:], word+achar, acc)
     acc = []
@@ -226,7 +225,7 @@ if __name__ == "__main__":
     print(addtwonumbers(number1, number2))
 
     #ex 2
-    print(longestsubstring("abcabcbb"))
+    print(longestsubstring("pwwkew"))
 
     #ex 3
     testpalindrom = 'abccba'
@@ -252,4 +251,4 @@ if __name__ == "__main__":
     print(sorted(atuple, reverse=True))
 
     # ex6  digits to letter in  a recrusive way
-    #print(digitstoletter('2369584325'))
+    print(digitstoletter('2369584325'))
