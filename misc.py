@@ -29,4 +29,4 @@ def slidingmean(alist, radius=1):
 if __name__ == "__main__":
     alist = [1, 2, 3, 4, 5]
     print(alist)
-    print(slidingmean(alist,1))
+    print(slidingmean(alist,2))

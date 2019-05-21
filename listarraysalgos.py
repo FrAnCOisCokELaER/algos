@@ -61,6 +61,21 @@ def uniquebest(tosort):
         res.add(elt)
     return list(res)
 
+#list intersection in O(m+n)
+def intersect(list1, list2):
+    def intersectloop(list1, list2, acc):
+        if not list1 or not list2:
+            return acc
+        elif list1[0] is list2[0]:
+            acc.append(list1[0])
+            return intersectloop(list1[1:], list2[1:], acc)
+        elif list1[0]>list2[0]:
+            return intersectloop(list1, list2[1:], acc)
+        elif list2[0]>list1[0]:
+            return intersectloop(list1[1:], list2, acc)
+    acc = []
+    intersectloop(list1, list2, acc)
+    return acc
 
 # divide an conquer binary search on sorted list
 def bsearch(tosearch, idx0, idxn, val):
@@ -165,4 +180,8 @@ if __name__ == "__main__":
     print(anagramslist)
     print(sortanagrams(anagramslist))
 
+    #list intersect
+    list1 =[1,2,3,4,5,6,7,8,9]
+    list2=[4,5,7,9,10,11]
+    print(intersect(list1, list2))
 #tips : for arrays sort, search thlnk of divide and conquer approach
