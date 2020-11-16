@@ -51,6 +51,17 @@ def unique(tosort):
         return list()
     return [tosort[0]] + unique(list(filter(lambda x: x != tosort[0], tosort)))
 
+def unique_on_sorted_list(a):
+    it=1
+    it_ref=0
+    init_len = len(a)
+    while(it<init_len):
+        if a[it_ref]==a[it_ref+1]:
+            a.pop(it_ref+1)
+        else:
+            it_ref=it_ref+1
+        it+=1
+    return a
 
 # using a set is reducing complexity to O(n) % hashmap collision
 def uniquebest(tosort):
