@@ -16,14 +16,14 @@
 # from typing import Set, Any
 #
 #
-# def addtwonumbers(number1, number2):
-#     totalcount = 0
-#     for idx, val in enumerate(number1):
-#         totalcount += val*10**idx
-#     for idx, val in enumerate(number2):
-#         totalcount += val * 10**idx
-#     countstring = str(totalcount)
-#     return sorted(list(map(int, countstring)), reverse=True)
+def addtwonumbers(number1, number2):
+    totalcount = 0
+    for idx, val in enumerate(number1):
+        totalcount += val*10**idx
+    for idx, val in enumerate(number2):
+        totalcount += val * 10**idx
+    countstring = str(totalcount)
+    return sorted(list(map(int, countstring)), reverse=True)
 #
 #
 # #ex 2
@@ -47,16 +47,19 @@
 # # Explanation: The answer is "wke", with the length of 3.
 # #              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 #
-# def longestsubstring(s):
-#     charset = set()
-#     maxcount = 0
-#     for char in s:
-#         if char not in charset:
-#             maxcount += 1
-#             charset.add(char)
-#         else:
-#             return maxcount
-#     return maxcount
+def longestsubstring(s):
+    charset = set()
+    currcount = maxcount =  0
+    for char in s:
+        if char not in charset:
+            currcount += 1
+            charset.add(char)
+        else:
+            if currcount > maxcount:
+                maxcount = currcount
+            currcount = 0
+            charset.clear()
+    return maxcount
 #
 # # ex3
 # # **Given a string s, find the longest palindromic substring in s.
@@ -69,31 +72,31 @@
 # # Input: "cbbd"
 # # Output: "bb"
 #
-# def ispalindrom(word):
-#     wordlength = len(word)
-#     if wordlength == 0 or wordlength == 1:
-#         return True
-#     elif word[0] != word[wordlength-1]:
-#         return False
-#     else:
-#         return ispalindrom(word[1:-1])
-#
-# def longestpalindrom(word):
-#     #given an offset generate all possible substrings
-#     def substrings(word, offset):
-#         sublen = len(word) - offset
-#         if sublen <= 0:
-#             return list()
-#         acc = []
-#         for o in range(0,offset+1):
-#             if o + sublen <= len(word):
-#                 acc.append(word[o:o+sublen])
-#         return acc
-#     globalacc = []
-#     for o in range(0, len(word)):
-#         globalacc.append(substrings(word, o))
-#
-#     return globalacc
+def ispalindrom(word):
+    wordlength = len(word)
+    if wordlength == 0 or wordlength == 1:
+        return True
+    elif word[0] != word[wordlength-1]:
+        return False
+    else:
+        return ispalindrom(word[1:-1])
+
+def longestpalindrom(word):
+    #given an offset generate all possible substrings
+    def substrings(word, offset):
+        sublen = len(word) - offset
+        if sublen <= 0:
+            return list()
+        acc = []
+        for o in range(0,offset+1):
+            if o + sublen <= len(word):
+                acc.append(word[o:o+sublen])
+        return acc
+    globalacc = []
+    for o in range(0, len(word)):
+        globalacc.append(substrings(word, o))
+
+    return globalacc
 #
 # #ex4
 # # Implement atoi which converts a string to an integer.
@@ -156,21 +159,23 @@
 # #   [-1, -1, 2]
 # # ]
 #
-#
-#     #combinatorial problem ( 3 in n)
-#     # def generatealltriplets(triplet, nums, globalacc):
-#     #     if len(triplet) == 3:
-#     #         globalacc.append(triplet)
-#     #     else:
-#     #         for idx, num in enumerate(nums):
-#     #             generatealltriplets(triplet + (num,), nums[0:idx] + nums[idx+1:], globalacc)
-#     #
-#     # globalacc = list()
-#     # triplet = tuple()
-#     # generatealltriplets(triplet, nums, globalacc)
-#     # return globalacc
-#
-# def threesum(nums):
+
+#combinatorial problem ( 3 in n)  (3!)
+def threesum(nums):
+    def generatealltriplets(triplet, nums, globalacc):
+        if len(triplet) == 3:
+            if sum(triplet) is 0:
+                globalacc.append(triplet)
+        else:
+            for idx, num in enumerate(nums):
+                generatealltriplets(triplet + (num,), nums[0:idx] + nums[idx+1:], globalacc)
+
+    globalacc = list()
+    triplet = tuple()
+    generatealltriplets(triplet, nums, globalacc)
+    return globalacc
+
+#def threesum(nums):
 #     def generatealltriplets(triplet, nums):
 #         if len(triplet) == 3:
 #             if sum(triplet) is 0:
@@ -180,14 +185,10 @@
 #             for idx, num in enumerate(nums):
 #                 res.append(generatealltriplets(triplet + (num,), nums[0:idx] + nums[idx + 1:]))
 #             return res
-#
-#     triplet = tuple()
-#     acc = list()
-#     for sublists in generatealltriplets(triplet, nums):
-#         for sub in sublists:
-#             for triplet in  sub:
-#                 acc.append(triplet)
-#     return set(acc)
+#    triplet = tuple()
+#    acc = list()
+#    return generatealltriplets(triplet, nums, acc)
+
 #
 #
 # #ex7
@@ -203,26 +204,26 @@
 # #
 # # Although the above answer is in lexicographical order, your answer could be in any order you want.
 #
-# def digitstoletter(digits): #stirng of number
-#     telmap = dict()
-#     telmap[2] = ['a','b','c']
-#     telmap[3] = ['d', 'e', 'f']
-#     telmap[4] = ['g', 'h', 'i']
-#     telmap[5] = ['j', 'k', 'l']
-#     telmap[6] = ['m', 'n', 'o']
-#     telmap[7] = ['p', 'q', 'r']
-#     telmap[8] = ['p', 'q', 'r','s']
-#     telmap[9] = ['v', 'w', 'x', 'y', 'z']
-#
-#     def toword(digits, word, acc):
-#         if not digits:
-#             acc.append(word)
-#         else:
-#             for achar in telmap[digits[0]]:
-#                 toword(digits[1:], word+achar, acc)
-#     acc = []
-#     toword([int(d) for d in digits], '', acc)
-#     return acc
+def digitstoletter(digits): #stirng of number
+    telmap = dict()
+    telmap[2] = ['a','b','c']
+    telmap[3] = ['d', 'e', 'f']
+    telmap[4] = ['g', 'h', 'i']
+    telmap[5] = ['j', 'k', 'l']
+    telmap[6] = ['m', 'n', 'o']
+    telmap[7] = ['p', 'q', 'r']
+    telmap[8] = ['p', 'q', 'r','s']
+    telmap[9] = ['v', 'w', 'x', 'y', 'z']
+
+    def toword(digits, word, acc):
+        if not digits:
+            acc.append(word)
+        else:
+            for achar in telmap[digits[0]]:
+                toword(digits[1:], word+achar, acc)
+    acc = []
+    toword([int(d) for d in digits], '', acc)
+    return acc
 #
 # #ex8
 # # Given a linked list, remove the n-th node from the end of list and return its head.
@@ -295,7 +296,12 @@
 # # Input: nums = [5,7,7,8,8,10], target = 6
 # # Output: [-1,-1]
 #
-#
+
+# def findpositions(alist, val):
+#     #dichotomy to find the index in log(n)
+#     #starting from this index run in foundidx - i and foundidx + i until the value change
+#     #return the index
+
 # #ex12
 # # Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
 # #
@@ -746,38 +752,40 @@
 # All inputs are guaranteed to be non-empty strings.
 #
 #
-# if __name__ == "__main__":
-#
-#     #ex 1
-#     number1 = [2,4,3]
-#     number2 = [5,6,4]
-#     print(addtwonumbers(number1, number2))
-#
-#     #ex 2
-#     print(longestsubstring("pwwkew"))
-#
-#     #ex 3
-#     testpalindrom = 'abccba'
-#     print(ispalindrom(testpalindrom))
-#     testpalindrom = 'abcdba'
-#     print(ispalindrom(testpalindrom))
-#     print(longestpalindrom(testpalindrom))
-#     allsubstrings = [item for sublist in longestpalindrom(testpalindrom) for item in sublist]
-#     print(allsubstrings)
-#     allpalinfroms = list(map(ispalindrom, allsubstrings))
-#     print(allpalinfroms)
-#
-#     #5
-#     nums = [-1, 0, 1, 2, -1, -4]
-#     #print(list(map(list,set(threesum(nums)))))
-#
-#     print(threesum(nums))
-#
-#     atuple = (1,2,3)
-#     print(sum(atuple))
-#     import functools
-#     print(functools.reduce(lambda a, b: a * 60 + b, atuple, 0))
-#     print(sorted(atuple, reverse=True))
-#
-#     # ex6  digits to letter in  a recrusive way
-#     print(digitstoletter('2369584325'))
+if __name__ == "__main__":
+
+    #ex 1
+    number1 = [2,4,3]
+    number2 = [5,6,4]
+    print(addtwonumbers(number1, number2))
+
+    #ex 2
+    print(longestsubstring("pwwkew"))
+
+    #ex 3
+    testpalindrom = 'abccba'
+    print(ispalindrom(testpalindrom))
+    testpalindrom = 'abcdba'
+    print(ispalindrom(testpalindrom))
+    print(longestpalindrom(testpalindrom))
+    allsubstrings = [item for sublist in longestpalindrom(testpalindrom) for item in sublist]
+    print(allsubstrings)
+    allpalinfroms = list(map(ispalindrom, allsubstrings))
+    print(allpalinfroms)
+
+    #5
+    #
+    print("threesum exercise")
+    nums = [-1, 0, 1, 2, -1, -4]
+    #print(list(map(list,set(threesum(nums)))))
+
+    print(threesum(nums))
+
+    atuple = (1,2,3)
+    print(sum(atuple))
+    import functools
+    print(functools.reduce(lambda a, b: a * 60 + b, atuple, 0))
+    print(sorted(atuple, reverse=True))
+
+    # ex6  digits to letter in  a recrusive way
+    #print(digitstoletter('2369584325'))

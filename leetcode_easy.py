@@ -3,7 +3,8 @@
 # #ex1
 # # Write a function that reverses a string. The input string is given as an array of characters char[].
 # # #
-# # # Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+# # # Do not allocate extra space for another array,
+#    you must do this by modifying the input array in-place with O(1) extra memory.
 # # #
 # # # You may assume all the characters consist of printable ascii characters.
 # # # Example 1:
@@ -14,8 +15,21 @@
 # # #
 # # # Input: ["H","a","n","n","a","h"]
 # # # Output: ["h","a","n","n","a","H"]
-#
-#
+
+#ex1 reverse string
+# "abcd" -> "dcba
+# "abcde" -> "edcba"
+# O(1) extra allocation
+#string type in python are immutable // as in java
+def reverseString(astring):
+    size = len(astring)
+    for i in range(0, size//2):
+        temp1 = astring[i]
+        temp2 = astring[size-1-i]
+        astring[i] = temp2
+        astring[size-1-i] = temp1
+    return astring
+
 # #ex2
 # # Given a binary tree, find its maximum depth.
 # #
@@ -26,13 +40,122 @@
 # # Example:
 # #
 # # # Given binary tree [3,9,20,null,null,15,7],
-# #   3
+# #     3
 # #    / \
 # #   9  20
 # #     /  \
 # #    15   7
 # # return its depth = 3.
-#
+
+#minimal definition of a BST
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+#push a  node in a root
+def push(root, aval):
+    if root:
+        if aval < root.val:
+            if root.left:
+                push(root.left, aval)
+            else:
+                root.left = Node(aval)
+        elif aval > root.val:
+            if root.right:
+                push(root.right, aval)
+            else:
+                root.right = Node(aval)
+        else:
+            print("node already present in the tree")
+            return root
+    else:
+        print("no root defined")
+        return -1
+
+def inordertraversal(root):
+    nodes = []
+    if root:
+        nodes += inordertraversal(root.left)
+        nodes += [root.val]
+        nodes += inordertraversal(root.right)
+    return nodes
+
+# # Example:
+# #
+# # # Given binary tree [3,9,20,null,null,15,7],
+# #     3
+# #    / \
+# #   9  20
+# #     /  \
+# #    15   7
+# # return its depth = 3.
+# return all the possible paths first ?
+def maxdepthdeprecated(root):
+    # def allpaths(root, path):
+    #     #     if not root:
+    #     #         return path
+    #     #     else:
+    #     #         acc = list()
+    #     #         acc+=[allpaths(root.right, path + [root.val])]
+    #     #         acc+=[allpaths(root.left, path + [root.val])]
+    #     #         return acc
+    #     # #acc = []
+    #     # all = allpaths(root, [])
+    #     # return all
+    def allpaths(root, path, acc):
+        if not root:
+            acc.append(path)
+        else:
+            allpaths(root.right, path + [root.val], acc)
+            allpaths(root.left, path + [root.val], acc)
+    acc = []
+    allpaths(root, [], acc)
+    return acc
+
+#max of a tree (or subtree)
+def maxdepth(root):
+    if not root:
+        return -1
+    return max(maxdepth(root.left), maxdepth(root.right)) + 1
+
+#additional cracking the code p256: check if all subtrees are balanced
+def isbalanced(root):
+    if not root:
+        return True
+    diff = maxdepth(root.left) - maxdepth(root.right)
+    if diff is not 0:
+        return False
+    else:
+        return isbalanced(root.left) and isbalanced(root.right)
+
+#additional : cracking the code p 255
+#List of Depths: Given a binary tree,
+#design an algorithm which creates a linked list of all the nodes at each depth
+#to finish : version recursive inordertraversal
+def listatdepth(root):
+    def reclistatdepth(root, level, lists):
+        #base case
+        if not root:
+            return
+        currentlevel = len(lists)
+        if level is currentlevel:
+            # create a new list because a new level is reached
+            currlist = list()
+            lists.append(currlist)
+        else:
+            # get all nodes at this level, the list should be already created
+            currlist = lists[level]
+        currlist.append(root)
+        reclistatdepth(root.left, level+1, lists)
+        reclistatdepth(root.right, level+1, lists)
+
+    lists=[] #contains the list of nodes at each depth
+    reclistatdepth(root,0,lists)
+    return lists
+
+
 # #ex3
 # # Given a non-empty array of integers, every element appears twice except for one. Find that single one.
 # #
@@ -48,12 +171,26 @@
 # #
 # # Input: [4,1,2,1,2]
 # # Output: 4
+#thix version requires not additional memory but is in O(2*N*log(N)) ~= O(NlogN)
+#a full linear can be implementaed with a map, each time an element is added to the map it is removed from the list
+def alltwicebutone(alist):
+    alist = sorted(alist)
+    idx=0
+    while idx < len(alist)-1:
+        val1 = alist[idx]
+        val2 = alist[idx+1]
+        if(val1!=val2):
+            return val1
+        idx+=2
+    return alist[len(alist)-1]
+
 #
 #
 # #ex4
 # # Write a program that outputs the string representation of numbers from 1 to n.
 # #
-# # But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
+# # But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”.
+# For numbers which are multiples of both three and five output “FizzBuzz”.
 # #
 # # Example:
 # #
@@ -565,6 +702,35 @@
 # This problem was inspired by this original tweet by Max Howell:
 #
 # Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so f*** off.
+#central, left, right
+def preordertraversal(node):
+    res = []
+    if node:
+        res = [node.val]
+        res = res + preordertraversal(node.left)
+        res = res + preordertraversal(node.right)
+    return res
+
+def pushinvert(root, val):
+    if root:
+        rootval = root.val
+        if val < rootval:
+            #push on the right side
+            if root.right:
+                pushinvert(root.right, val)
+            else:
+                root.right = Node(val)
+        elif val > rootval:
+            #push on the left side
+            if root.left:
+                pushinvert(root.left, val)
+            else:
+                root.left = Node(val)
+        else:
+            return root #already present in the graph, do nothing
+    else:
+        return -1
+
 #
 # #32
 # The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
@@ -636,3 +802,42 @@
 # Note:
 # Then length of the input array is in range [1, 10,000].
 # The input array may contain duplicates, so ascending order here means <=.
+
+
+if __name__ == "__main__":
+
+    #ex1 reverse a string
+    astringex1 = ['a','b','c','d']
+    astringex1 = ['a', 'b', 'c', 'd', 'e']
+    print(reverseString(astringex1))
+
+    #ex2 max depth in an BST
+    root = Node(5)
+    push(root, 2)
+    push(root, 1)
+    push(root, 4)
+    push(root, 10)
+    push(root, 9)
+    push(root, 11)
+    push(root, 5)
+    print(inordertraversal(root))
+    print(maxdepthdeprecated(root))
+    print(maxdepth(root))
+    print(isbalanced(root))
+
+    #ex2 suite
+    res = listatdepth(root)
+    print(res)
+
+    #ex3 : alltwicebutone
+    alist = [1, 2, 1, 2, 5]
+    print(alltwicebutone(alist))
+
+    #invert a binary tree
+    preorderlist = preordertraversal(root)
+    print(preorderlist)
+    rootinvert = Node(5)
+    for val in preorderlist:
+        pushinvert(rootinvert, val)
+    print(preordertraversal(rootinvert))
+    toto = 0

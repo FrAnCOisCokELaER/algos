@@ -61,21 +61,16 @@ def uniquebest(tosort):
         res.add(elt)
     return list(res)
 
-#list intersection in O(m+n)
+#list intersection in O(m+n) with recursion
 def intersect(list1, list2):
-    def intersectloop(list1, list2, acc):
-        if not list1 or not list2:
-            return acc
-        elif list1[0] is list2[0]:
-            acc.append(list1[0])
-            return intersectloop(list1[1:], list2[1:], acc)
-        elif list1[0]>list2[0]:
-            return intersectloop(list1, list2[1:], acc)
-        elif list2[0]>list1[0]:
-            return intersectloop(list1[1:], list2, acc)
-    acc = []
-    intersectloop(list1, list2, acc)
-    return acc
+    if not list1 or not list2:
+        return []
+    elif list1[0] is list2[0]:
+        return [list1[0]] + intersect(list1[1:], list2[1:])
+    elif list1[0] > list2[0]:
+        return intersect(list1, list2[1:])
+    elif list1[0] < list2[0]:
+        return intersect(list1[1:], list2)
 
 # divide an conquer binary search on sorted list
 def bsearch(tosearch, idx0, idxn, val):

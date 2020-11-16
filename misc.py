@@ -1,4 +1,7 @@
 #time complexity : O(N) (insertin in a dll is O(1))
+import collections
+
+
 def cumsum(alist):
     res = list()
     for idx in range(len(alist)):
@@ -24,6 +27,21 @@ def slidingmean(alist, radius=1):
             valright = asum[idx + radius]
         res.append(valright - valleft)
     return res
+
+#flood fill
+#geiven an 2D matrix replace the targetcolor by repcolor
+# def floodfill(im, startposition, repcolor ):
+#     #
+#     targetcolor = im[startposition]
+#     import collections
+#     pixelq = collections.deque()
+#     pixelq.append(startposition)
+#     while len(pixelq) > 0:
+#         currpix = pixelq.pop()
+#         im[currpix] = repcolor
+#         pixelq.append(currpix + 1)
+#     # 4 neighbor adjacency graph
+
 
 
 if __name__ == "__main__":
